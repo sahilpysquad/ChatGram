@@ -14,6 +14,7 @@ from pathlib import Path
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
+from chatgram.chats.middlewares import TokenAuthMiddleware
 from config import routing
 
 # This allows easy placement of apps within the interior
@@ -36,6 +37,6 @@ from config.websocket import websocket_application  # noqa isort:skip
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket": URLRouter(routing.websocket_urlpatterns),
+        "websocket": TokenAuthMiddleware(URLRouter(routing.websocket_urlpatterns)),
     }
 )
