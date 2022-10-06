@@ -31,7 +31,6 @@ class TokenAuthentication:
     """
 
     def authenticate_credentials(self, key):
-        print(key)
         model = self.get_model()
         try:
             token = model.objects.select_related("user").get(key=key)
